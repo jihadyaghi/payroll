@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payroll_project/models/payroll.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -8,6 +9,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final hoursController = TextEditingController();
+  final rateController = TextEditingController();
+  final taxController = TextEditingController();
+  final deductionController = TextEditingController();
+  List <Payroll> payroll = [];
+  void addPayroll(){
+    if (hoursController.text.isEmpty || rateController.text.isEmpty || taxController.text.isEmpty || deductionController.text.isEmpty){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all fields")));
+      return ;
+    }
+    Payroll p = Payroll(double.parse(hoursController.text), double.parse(rateController.text), double.parse(taxController.text), double.parse(deductionController.text));
+    setState(() {
+      payroll.add(p);
+    });
+    hoursController.clear();
+    rateController.clear();
+    taxController.clear();
+    deductionController.clear();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,9 +115,11 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 5),
               TextField(
+                controller: hoursController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Enter hours",
+                  
                 ),
               ),
 
@@ -109,6 +131,7 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 5),
               TextField(
+                controller: rateController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Enter hourly rate",
@@ -123,6 +146,7 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 5),
               TextField(
+                controller: taxController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Enter tax percentage",
@@ -137,6 +161,7 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 5),
               TextField(
+                controller: deductionController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Enter deductions",
@@ -149,7 +174,7 @@ class _HomeState extends State<Home> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: addPayroll,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF009688),
                   ),
@@ -164,10 +189,29 @@ class _HomeState extends State<Home> {
               ),
 
               SizedBox(height: 20),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: payroll.length,
+                itemBuilder: (context , index){
+                  final item = payroll[index];
+                  return Card(
+                    elevation: 3,
+                    margin: EdgeInsets.symmetric(vertical: 8),
+                    child: Text(item.toString() ,)
+                    
+
+                  );
+                },
+              )
             ],
+            
           ),
         ),
+        
       ),
+
+     
     );
   }
 }
