@@ -13,11 +13,28 @@ class _HomeState extends State<Home> {
   final rateController = TextEditingController();
   final taxController = TextEditingController();
   final deductionController = TextEditingController();
-  List <Payroll> payroll = [];
+  List <Payroll> payroll = [
+    Payroll(40, 15, 10, 20),
+    Payroll(35, 12, 8, 10),
+    Payroll(45, 18, 12, 25),
+    Payroll(50, 15, 10, 20),
+  ];
   void addPayroll(){
     if (hoursController.text.isEmpty || rateController.text.isEmpty || taxController.text.isEmpty || deductionController.text.isEmpty){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all fields")));
       return ;
+    }
+    double ? hours = double.tryParse(hoursController.text);
+    double ? rate = double.tryParse(rateController.text);
+    double ? tax = double.tryParse(taxController.text);
+    double ? deduction = double.tryParse(deductionController.text);
+    if (hours == null || rate == null || tax == null || deduction == null){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter valid number")));
+      return ;
+    }
+    if (hours < 0 || rate <0 || tax<0 || tax>100 || deduction<0){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid values .")));
+      return;
     }
     Payroll p = Payroll(double.parse(hoursController.text), double.parse(rateController.text), double.parse(taxController.text), double.parse(deductionController.text));
     setState(() {
