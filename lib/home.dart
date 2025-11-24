@@ -198,7 +198,22 @@ class _HomeState extends State<Home> {
                   return Card(
                     elevation: 3,
                     margin: EdgeInsets.symmetric(vertical: 8),
-                    child: Text(item.toString() ,)
+                    child: Padding(padding: const EdgeInsets.all(12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child:Text(item.toString() , style: TextStyle(fontSize: 16)) 
+                          ),
+                          IconButton( icon: Icon(Icons.delete , color: Colors.red),onPressed: () => {
+                            setState(() {
+                              payroll.removeAt(index);
+                            })
+
+                          },)
+                      ],
+                    ),)
+                    
                     
 
                   );

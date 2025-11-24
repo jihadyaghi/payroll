@@ -19,7 +19,8 @@ class Payroll{
   }
   @override
   String toString() {
-    return "Net Salary : \$ ${netSalary.toStringAsFixed(2)}/n "
+    return "Net Salary : \$ ${netSalary.toStringAsFixed(2)}\n "
     "Gross Salary : \$ ${gross.toStringAsFixed(2)}     Tax: \$ ${taxAmount.toStringAsFixed(2)} ";
   }
+
 }
